@@ -14,16 +14,433 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      announcements: {
+        Row: {
+          active: boolean | null
+          body: string | null
+          created_at: string | null
+          id: string
+          image_url: string | null
+          kind: string | null
+          link: string | null
+          title: string
+        }
+        Insert: {
+          active?: boolean | null
+          body?: string | null
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          kind?: string | null
+          link?: string | null
+          title: string
+        }
+        Update: {
+          active?: boolean | null
+          body?: string | null
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          kind?: string | null
+          link?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          admitted_at: string | null
+          booking_ref: string
+          created_at: string | null
+          full_name: string | null
+          id: string
+          payment_method: string | null
+          phone: string | null
+          quantity: number
+          receipt_path: string | null
+          screening_id: string
+          seats: string[]
+          status: string
+          total_amount: number
+          user_id: string
+          whatsapp: string | null
+        }
+        Insert: {
+          admitted_at?: string | null
+          booking_ref?: string
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          payment_method?: string | null
+          phone?: string | null
+          quantity?: number
+          receipt_path?: string | null
+          screening_id: string
+          seats: string[]
+          status?: string
+          total_amount?: number
+          user_id?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          admitted_at?: string | null
+          booking_ref?: string
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          payment_method?: string | null
+          phone?: string | null
+          quantity?: number
+          receipt_path?: string | null
+          screening_id?: string
+          seats?: string[]
+          status?: string
+          total_amount?: number
+          user_id?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_screening_id_fkey"
+            columns: ["screening_id"]
+            isOneToOne: false
+            referencedRelation: "screenings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      food_items: {
+        Row: {
+          category: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          name_ar: string | null
+          price: number
+        }
+        Insert: {
+          category?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          name_ar?: string | null
+          price: number
+        }
+        Update: {
+          category?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          name_ar?: string | null
+          price?: number
+        }
+        Relationships: []
+      }
+      food_orders: {
+        Row: {
+          booking_id: string | null
+          created_at: string | null
+          id: string
+          items: Json
+          seat_info: string | null
+          status: string
+          total_amount: number
+          user_id: string
+        }
+        Insert: {
+          booking_id?: string | null
+          created_at?: string | null
+          id?: string
+          items: Json
+          seat_info?: string | null
+          status?: string
+          total_amount?: number
+          user_id?: string
+        }
+        Update: {
+          booking_id?: string | null
+          created_at?: string | null
+          id?: string
+          items?: Json
+          seat_info?: string | null
+          status?: string
+          total_amount?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "food_orders_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hall_rentals: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          event_date: string | null
+          event_type: string | null
+          full_name: string
+          guests: number | null
+          id: string
+          message: string | null
+          phone: string
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          event_date?: string | null
+          event_type?: string | null
+          full_name: string
+          guests?: number | null
+          id?: string
+          message?: string | null
+          phone: string
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          event_date?: string | null
+          event_type?: string | null
+          full_name?: string
+          guests?: number | null
+          id?: string
+          message?: string | null
+          phone?: string
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      memberships: {
+        Row: {
+          companion_name: string | null
+          created_at: string | null
+          id: string
+          payment_method: string | null
+          phone: string | null
+          plan: string | null
+          receipt_path: string | null
+          status: string
+          user_id: string
+          valid_until: string | null
+        }
+        Insert: {
+          companion_name?: string | null
+          created_at?: string | null
+          id?: string
+          payment_method?: string | null
+          phone?: string | null
+          plan?: string | null
+          receipt_path?: string | null
+          status?: string
+          user_id?: string
+          valid_until?: string | null
+        }
+        Update: {
+          companion_name?: string | null
+          created_at?: string | null
+          id?: string
+          payment_method?: string | null
+          phone?: string | null
+          plan?: string | null
+          receipt_path?: string | null
+          status?: string
+          user_id?: string
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
+      movies: {
+        Row: {
+          age_rating: string | null
+          cast_list: string[] | null
+          created_at: string | null
+          description: string | null
+          description_ar: string | null
+          duration: string | null
+          early_booking: boolean | null
+          featured: boolean | null
+          genre: string | null
+          id: string
+          poster_url: string | null
+          rating: number | null
+          title: string
+          title_ar: string | null
+          trailer_url: string | null
+        }
+        Insert: {
+          age_rating?: string | null
+          cast_list?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          description_ar?: string | null
+          duration?: string | null
+          early_booking?: boolean | null
+          featured?: boolean | null
+          genre?: string | null
+          id?: string
+          poster_url?: string | null
+          rating?: number | null
+          title: string
+          title_ar?: string | null
+          trailer_url?: string | null
+        }
+        Update: {
+          age_rating?: string | null
+          cast_list?: string[] | null
+          created_at?: string | null
+          description?: string | null
+          description_ar?: string | null
+          duration?: string | null
+          early_booking?: boolean | null
+          featured?: boolean | null
+          genre?: string | null
+          id?: string
+          poster_url?: string | null
+          rating?: number | null
+          title?: string
+          title_ar?: string | null
+          trailer_url?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string | null
+          id: string
+          read: boolean | null
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string | null
+          id?: string
+          read?: boolean | null
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          body?: string | null
+          created_at?: string | null
+          id?: string
+          read?: boolean | null
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      screenings: {
+        Row: {
+          created_at: string | null
+          date: string
+          id: string
+          movie_id: string
+          price: number
+          room: string | null
+          time: string
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          id?: string
+          movie_id: string
+          price?: number
+          room?: string | null
+          time: string
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          id?: string
+          movie_id?: string
+          price?: number
+          room?: string | null
+          time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "screenings_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_occupied_seats: { Args: { _screening: string }; Returns: string[] }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +567,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
