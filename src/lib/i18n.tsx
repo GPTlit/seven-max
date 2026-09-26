@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type Lang = "ar" | "fr";
+export type Lang = "ar" | "fr" | "en";
 
 const dict = {
   home: { ar: "الرئيسية", fr: "Accueil" },
@@ -94,6 +94,34 @@ const dict = {
   notifications: { ar: "الإشعارات", fr: "Notifications" },
 } as const;
 
+
+const en: Record<keyof typeof dict, string> = {
+  home: "Home", movies: "Movies", showtimes: "Showtimes", tickets: "Tickets", more: "More",
+  tagline: "More than a cinema, an experience", nowShowing: "Now showing", featured: "Featured",
+  bookNow: "Book a showtime", trailer: "Trailer", cast: "Cast", today: "Today", tomorrow: "Tomorrow",
+  noShows: "No showtimes this day", chooseSeats: "Choose your seats", screen: "Screen",
+  available: "Available", selected: "Selected", occupied: "Taken", seats: "Seats", total: "Total",
+  continue: "Continue", payment: "Payment", payMethod: "Choose a payment method", counter: "Pay at the box office",
+  fullName: "Full name", phone: "Phone number", whatsapp: "WhatsApp number", quantity: "Quantity",
+  receipt: "Bank transfer receipt screenshot", uploadReceipt: "Tap to upload", confirm: "Confirm booking",
+  transferTo: "Transfer the amount to the Seven Max account, then upload the receipt",
+  bookingSent: "Booking sent!", bookingPendingMsg: "Your booking is being verified. Your ticket will be ready once payment is confirmed.",
+  viewTicket: "View my ticket", backHome: "Back to home", myTickets: "My bookings", upcoming: "Upcoming", past: "Past",
+  status_pending: "Pending", status_approved: "Confirmed", status_rejected: "Rejected", status_cancelled: "Cancelled", status_admitted: "Admitted",
+  food: "Snacks & drinks", foodSub: "Delivered straight to your seat", addToCart: "Add", seatNumber: "Seat number",
+  order: "Order", myOrders: "My orders", food_preparing: "Preparing", food_on_the_way: "On the way", food_delivered: "Delivered",
+  vip: "VIP Membership", vipSub: "Pass for you + 1 companion", rental: "Hall rental",
+  rentalSub: "Host your events in our private halls: birthdays, meetings, seminars...", send: "Send",
+  account: "My account", signIn: "Sign in", signUp: "Create account", signOut: "Sign out", email: "Email", password: "Password",
+  google: "Continue with Google", apple: "Continue with Apple", or: "or", admin: "Admin panel", info: "Practical info",
+  hours: "Every day, 10am to midnight", address: "City centre, Nouakchott", signInRequired: "Sign in to continue",
+  checkEmail: "Check your email to confirm your account", seatsTaken: "Some seats are no longer available",
+  admitted: "Welcome! Enjoy the show", showQr: "Show this code at the entrance", subscribe: "Subscribe",
+  companion: "Companion name", perMonth: "/ month", memberSince: "Valid until", cart: "Cart", empty: "Nothing yet",
+  eventType: "Event type", eventDate: "Date", guests: "Guests", message: "Message", sent: "Sent, we will contact you soon",
+  notifications: "Notifications",
+};
+
 export type Key = keyof typeof dict;
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: Key) => string; dir: "rtl" | "ltr" };
@@ -103,7 +131,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ar");
   useEffect(() => {
     const s = localStorage.getItem("sm-lang");
-    if (s === "fr" || s === "ar") setLangState(s);
+    if (s === "fr" || s === "ar" || s === "en") setLangState(s);
   }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -113,7 +141,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("sm-lang", l);
     setLangState(l);
   };
-  const t = (k: Key) => dict[k][lang];
+  const t = (k: Key) => (lang === "en" ? en[k] : dict[k][lang]);
   return <I18nCtx.Provider value={{ lang, setLang, t, dir: lang === "ar" ? "rtl" : "ltr" }}>{children}</I18nCtx.Provider>;
 }
 
@@ -125,5 +153,5 @@ export function useI18n() {
 
 export function fmtDate(d: string | Date, lang: Lang, opts: Intl.DateTimeFormatOptions = { weekday: "short", day: "numeric", month: "short" }) {
   const date = typeof d === "string" ? new Date(d + (d.length === 10 ? "T00:00:00" : "")) : d;
-  return date.toLocaleDateString(lang === "ar" ? "ar-MA" : "fr-FR", opts);
+  return date.toLocaleDateString(lang === "ar" ? "ar-MA" : lang === "en" ? "en-GB" : "fr-FR", opts);
 }

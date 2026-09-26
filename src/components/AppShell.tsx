@@ -39,14 +39,14 @@ export function AppShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => setLang(lang === "ar" ? "fr" : "ar")}
-              className="flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold hover:border-gold"
-              aria-label="Language"
-            >
-              <Languages className="h-3.5 w-3.5 text-gold" />
-              {lang === "ar" ? "FR" : "عربي"}
-            </button>
+            <div className="flex items-center rounded-full border border-border p-0.5 text-xs font-semibold" role="group" aria-label="Language">
+              <Languages className="mx-1.5 h-3.5 w-3.5 text-gold" />
+              {(["ar", "fr", "en"] as const).map((l) => (
+                <button key={l} onClick={() => setLang(l)} className={`rounded-full px-2.5 py-1 ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+                  {l === "ar" ? "ع" : l.toUpperCase()}
+                </button>
+              ))}
+            </div>
             <Link to="/account" className="rounded-full border border-border p-2 hover:border-gold" aria-label={t("notifications")}>
               <Bell className="h-4 w-4" />
             </Link>
