@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Crown, Upload, Check } from "lucide-react";
+import { Upload, Check } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { PAYMENT_METHODS, VIP_PRICE, uploadReceipt } from "@/lib/data";
-import { useI18n, fmtDate } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
 import { PageHeader, SignInGate } from "@/components/AppShell";
 import { VipPass } from "@/components/VipPass";
