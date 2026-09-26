@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
 import { PageHeader, SignInGate } from "@/components/AppShell";
-import { VipPass } from "./vip";
+import { VipPass } from "@/components/VipPass";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
